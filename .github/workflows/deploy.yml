@@ -30,21 +30,21 @@ jobs:
           password: ${{ secrets.DOCKER_PASSWORD }}
 
       - name: Build Docker Image
-        run: docker build -t ${{ secrets.DOCKER_USERNAME}}/ci-cd-github-actions:latest
+        run: docker build -t ${{ secrets.DOCKER_USERNAME}}/ci-cd-github-actions-and-ec2:latest .
 
 
       - name: Push Image to Docker Hub
-        run: docker push ${{ secrets.DOCKER_USERNAME }}/ci-cd-github-actions:latest
+        run: docker push ${{ secrets.DOCKER_USERNAME }}/ci-cd-github-actions-and-ec2:latest
 
 
-      - name: SSH and Deploy to EC2
-        uses: appleboy/ssh-action@v0.1.7
-        with:
-          host: ${{ secrets.EC2_HOST }}
-          username: ${{ secrets.EC2_USER }}
-          key: ${{ secrets.EC2_SSH_KEY }}
-          script: |
-            docker stop ci-cd-github-actions || true
-            docker rm   ci-cd-github-actions || true
-            docker pull ${{ secrets.DOCKER_USERNAME }}/ci-cd-github-actions:latest
-            docker run -d --name  ci-cd-github-actions -p 8080:8080 ${{ secrets.DOCKER_USERNAME }}/ci-cd-github-actions:latest
+#      - name: SSH and Deploy to EC2
+#        uses: appleboy/ssh-action@v0.1.7
+#        with:
+#          host: ${{ secrets.EC2_HOST }}
+#          username: ${{ secrets.EC2_USER }}
+#          key: ${{ secrets.EC2_SSH_KEY }}
+#          script: |
+#            docker stop ci-cd-github-actions-and-ec2 || true
+#            docker rm   ci-cd-github-actions-and-ec2 || true
+#            docker pull ${{ secrets.DOCKER_USERNAME }}/ci-cd-github-actions-and-ec2:latest
+#            docker run -d --name  ci-cd-github-actions-and-ec2 -p 8080:8080 ${{ secrets.DOCKER_USERNAME }}/ci-cd-github-actions-and-ec2:latest

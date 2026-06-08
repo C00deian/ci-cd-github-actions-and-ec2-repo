@@ -49,6 +49,6 @@
 				<artifactId>spring-boot-maven-plugin</artifactId>
 			</plugin>
 		</plugins>
+		<finalName>ci-cd-github-actions-and-ec2</finalName>
 	</build>
-
 </project>
